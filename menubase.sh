@@ -64,7 +64,7 @@ while :; do
         if [ -f "$archivo" ]; then
             echo "Archivo encontrado: $archivo"
             echo "Codigo del archivo ejecutado abajo:"
-            cat $archivo
+            cat $archivo | more
             echo -e "Texto en la primera línea\nTexto en la segunda línea"
 
             ./$archivo
