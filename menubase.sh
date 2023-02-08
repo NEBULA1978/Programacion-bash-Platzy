@@ -12,7 +12,7 @@ while :; do
     echo "4. Salir"
     echo "5. Buscar carpeta"
     echo "6. Mostrar archivos y seleccionar"
-    echo "7. Volver a la carpeta actual despues de haber pulsado la opcion 6"
+    
     echo ""
     #Escoger menu
     echo -n "Escoger opcion: "
@@ -48,35 +48,36 @@ while :; do
         read foo
         ;;
     6)
-       echo "Mostrando carpetas en la ruta actual"
+        echo "Mostrando carpetas en la ruta actual"
         ls -d * .
 
         echo "Selecciona la carpeta a entrar: "
         read carpeta
         if [ -d "$carpeta" ]; then
-          echo "Carpeta encontrada: $carpeta"
-          cd $carpeta
-          echo "Mostrando archivos en la carpeta $carpeta"
-          ls
-          echo "Selecciona el archivo a ejecutar: "
-          read archivo
-          if [ -f "$archivo" ]; then
+            echo "Carpeta encontrada: $carpeta"
+            ruta_actual=$(pwd)
+            cd $carpeta
+            echo "Mostrando archivos en la carpeta $carpeta"
+            ls
+            echo "Selecciona el archivo a ejecutar: "
+            read archivo
+        if [ -f "$archivo" ]; then
             echo "Archivo encontrado: $archivo"
+            echo "Codigo del archivo ejecutado abajo:"
+            cat $archivo
+            echo -e "Texto en la primera línea\nTexto en la segunda línea"
+
             ./$archivo
-          
-          else
-            echo "Archivo no encontrado"
-          fi
+            cd "$ruta_actual"
         else
-          echo "Carpeta no encontrada"
+            echo "Archivo no encontrado"
         fi
-        read foo
-        ;;
-    7)
-        echo "Volver a la carpeta actual despues de haber pulsado la opcion 6"
-        cd ..
-        read foo
-        ;;    
+    else
+        echo "Carpeta no encontrada"
+    fi
+    read foo
+  ;;
+  
     #Alerta
     *)
         echo "Opcion invalida..."
